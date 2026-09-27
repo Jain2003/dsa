@@ -41,6 +41,7 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Rearrange Array Elements by Sign** | [2026-09-26-rearrange_array_elements_by_sign.md](file:///mnt/d/sahaj/dsa/2026-09-26-rearrange_array_elements_by_sign.md) | Even/Odd index pointer placement |
 | **Pascal's Triangle** | [2026-09-26-pascals_triangle.md](file:///mnt/d/sahaj/dsa/2026-09-26-pascals_triangle.md) | Dynamic row building |
 | **Pascal's Triangle II** | [2026-09-26-pascals_triangle_ii.md](file:///mnt/d/sahaj/dsa/2026-09-26-pascals_triangle_ii.md) | Combinatorics & $O(K)$ space optimization |
+| **Maximum Subarray (Kadane's Algorithm)** | [2026-09-27-maximum_subarray.md](file:///mnt/d/sahaj/dsa/2026-09-27-maximum_subarray.md) | Reset negative running sum (1 pass, $O(N)$) |
 
 ### 👉 Two Pointers
 | Problem / Topic | File | Key Pattern / Concept |
@@ -48,7 +49,9 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Valid Palindrome** | [2026-09-21-valid_palindrome.md](file:///mnt/d/sahaj/dsa/2026-09-21-valid_palindrome.md) | Shrinking two pointers with sanitization |
 | **Two Sum II (Sorted Array)** | [2026-09-21-two_sum_ii.md](file:///mnt/d/sahaj/dsa/2026-09-21-two_sum_ii.md) | Left/Right pointers |
 | **3Sum** | [2026-09-21-three_sum.md](file:///mnt/d/sahaj/dsa/2026-09-21-three_sum.md) | Sorting + Two Pointers + Duplicate skip |
+| **4Sum** | [2026-09-27-four_sum.md](file:///mnt/d/sahaj/dsa/2026-09-27-four_sum.md) | Nested Loops + Two Pointers + Duplicate skip |
 | **Container With Most Water** | [2026-09-21-container_with_most_water.md](file:///mnt/d/sahaj/dsa/2026-09-21-container_with_most_water.md) | Greedy boundary reduction |
+| **Sort Colors (Dutch National Flag)** | [2026-09-27-sort_colors.md](file:///mnt/d/sahaj/dsa/2026-09-27-sort_colors.md) | 3-pointer partition (1 pass, $O(N)$) |
 
 ### 🔍 Binary Search
 | Problem / Topic | File | Key Pattern / Concept |
