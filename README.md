@@ -42,6 +42,8 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Pascal's Triangle** | [2026-09-26-pascals_triangle.md](file:///mnt/d/sahaj/dsa/2026-09-26-pascals_triangle.md) | Dynamic row building |
 | **Pascal's Triangle II** | [2026-09-26-pascals_triangle_ii.md](file:///mnt/d/sahaj/dsa/2026-09-26-pascals_triangle_ii.md) | Combinatorics & $O(K)$ space optimization |
 | **Maximum Subarray (Kadane's Algorithm)** | [2026-09-27-maximum_subarray.md](file:///mnt/d/sahaj/dsa/2026-09-27-maximum_subarray.md) | Reset negative running sum (1 pass, $O(N)$) |
+| **Next Permutation** | [2026-09-28-next_permutation.md](file:///mnt/d/sahaj/dsa/2026-09-28-next_permutation.md) | Find rightmost breakpoint, swap next greater, reverse suffix |
+| **Find Missing & Repeating Numbers** | [2026-09-28-missing_and_repeating_numbers.md](file:///mnt/d/sahaj/dsa/2026-09-28-missing_and_repeating_numbers.md) | Math equations ($S$ and $S^2$) / XOR Bit Manipulation |
 
 ### 👉 Two Pointers
 | Problem / Topic | File | Key Pattern / Concept |
