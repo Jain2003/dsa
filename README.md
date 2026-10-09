@@ -62,6 +62,14 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Search a 2D Matrix** | [2026-09-22-search_a_2d_matrix.md](file:///mnt/d/sahaj/dsa/2026-09-22-search_a_2d_matrix.md) | Virtual 1D flattening (`row = mid / cols`, `col = mid % cols`) |
 | **Single Element in Sorted Array** | [2026-09-25-single_element_in_sorted_array.md](file:///mnt/d/sahaj/dsa/2026-09-25-single_element_in_sorted_array.md) | Even/Odd index parity observation |
 | **Logarithmic Time Complexity** | [2026-09-25-logarithmic_time_complexity.md](file:///mnt/d/sahaj/dsa/2026-09-25-logarithmic_time_complexity.md) | Mathematical intuition of $O(\log N)$ |
+| **Koko Eating Bananas** | [2026-10-08-koko_eating_bananas.md](file:///mnt/d/sahaj/dsa/2026-10-08-koko_eating_bananas.md) | Binary search on answer space (`1` to `max(piles)`) |
+| **Sqrt(x)** | [2026-10-08-sqrtx.md](file:///mnt/d/sahaj/dsa/2026-10-08-sqrtx.md) | Floor square root via binary search space `[1, x]` |
+| **Find Smallest Divisor Given Threshold** | [2026-10-08-smallest_divisor_given_a_threshold.md](file:///mnt/d/sahaj/dsa/2026-10-08-smallest_divisor_given_a_threshold.md) | Binary search on divisor range `[1, max(nums)]` |
+| **Minimum Days to Make m Bouquets** | [2026-10-08-minimum_number_of_days_to_make_m_bouquets.md](file:///mnt/d/sahaj/dsa/2026-10-08-minimum_number_of_days_to_make_m_bouquets.md) | Binary search on day range `[1, max(bloomDay)]` |
+| **Capacity To Ship Packages Within D Days** | [2026-10-08-capacity_to_ship_packages_within_d_days.md](file:///mnt/d/sahaj/dsa/2026-10-08-capacity_to_ship_packages_within_d_days.md) | Binary search on capacity range `[max(w), sum(w)]` |
+| **Split Array Largest Sum** | [2026-10-09-split_array_largest_sum.md](file:///mnt/d/sahaj/dsa/2026-10-09-split_array_largest_sum.md) | Binary search on largest sum limit `[max(nums), sum(nums)]` |
+| **Search a 2D Matrix II** | [2026-10-09-search_a_2d_matrix_ii.md](file:///mnt/d/sahaj/dsa/2026-10-09-search_a_2d_matrix_ii.md) | Top-right corner staircase search ($O(m + n)$) |
+| **Find a Peak Element II** | [2026-10-09-find_a_peak_element_ii.md](file:///mnt/d/sahaj/dsa/2026-10-09-find_a_peak_element_ii.md) | Column max + binary search on columns ($O(m \log n)$) |
 
 ### 🥞 Stack
 | Problem / Topic | File | Key Pattern / Concept |
@@ -74,6 +82,8 @@ This repository documents my daily problem-solving journey, covering fundamental
 | :--- | :--- | :--- |
 | **Bubble Sort** | [2026-09-21-bubble_sort.md](file:///mnt/d/sahaj/dsa/2026-09-21-bubble_sort.md) | Adjacent swap, early exit flag |
 | **Insertion Sort** | [2026-09-21-insertion_sort.md](file:///mnt/d/sahaj/dsa/2026-09-21-insertion_sort.md) | Incremental insertion in sorted prefix |
+| **Merge Sort** | [2026-09-29-merge_sort.md](file:///mnt/d/sahaj/dsa/2026-09-29-merge_sort.md) | Divide and Conquer ($O(N \log N)$) |
+| **Count Inversions** | [2026-09-29-count_inversions.md](file:///mnt/d/sahaj/dsa/2026-09-29-count_inversions.md) | Modified Merge Sort ($O(N \log N)$) |
 
 ### 🐢 Fast & Slow Pointers / Cycle Detection
 | Problem / Topic | File | Key Pattern / Concept |
