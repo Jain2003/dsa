@@ -77,6 +77,16 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Valid Parentheses** | [2026-09-21-valid_parentheses.md](file:///mnt/d/sahaj/dsa/2026-09-21-valid_parentheses.md) | LIFO bracket matching |
 | **Evaluate Reverse Polish Notation** | [2026-09-21-eval_rpn.md](file:///mnt/d/sahaj/dsa/2026-09-21-eval_rpn.md) | Operand stack evaluation |
 
+### 🔁 Recursion & Backtracking
+| Problem / Topic | File | Key Pattern / Concept |
+| :--- | :--- | :--- |
+| **Generate Parentheses** | [2026-10-10-generate_parentheses.md](file:///mnt/d/sahaj/dsa/2026-10-10-generate_parentheses.md) | Backtracking with `open < n` and `close < open` rules |
+| **Subsets** | [2026-10-10-subsets.md](file:///mnt/d/sahaj/dsa/2026-10-10-subsets.md) | Pick / Don't Pick recursion ($O(N \cdot 2^N)$) |
+| **Check Subsequence Sum K** | [2026-10-13-check-subsequence-sum-k.md](file:///mnt/d/sahaj/dsa/2026-10-13-check-subsequence-sum-k.md) | Pick / Don't Pick with short-circuiting & DP memoization |
+| **Count Subsequences with Sum K** | [2026-10-13-count-subsequences-with-target-sum.md](file:///mnt/d/sahaj/dsa/2026-10-13-count-subsequences-with-target-sum.md) | Parameterized vs. Functional recursion & DP counting |
+| **Generate Binary Strings Without Consecutive 1s** | [2026-10-13-generate-binary-strings-without-consecutive-1s.md](file:///mnt/d/sahaj/dsa/2026-10-13-generate-binary-strings-without-consecutive-1s.md) | Constrained backtracking (`current.back() == '0'`) |
+| **Combination Sum** | [2026-10-14-combination-sum.md](file:///mnt/d/sahaj/dsa/2026-10-14-combination-sum.md) | Unbounded pick/stay & don't pick/move backtracking |
+
 ### 🔄 Sorting Algorithms
 | Problem / Topic | File | Key Pattern / Concept |
 | :--- | :--- | :--- |
@@ -97,6 +107,8 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Reverse Digits** | [2026-09-21-reverse_digits.md](file:///mnt/d/sahaj/dsa/2026-09-21-reverse_digits.md) | Modulo and division digit extraction |
 | **Reverse Integer** | [2026-09-21-reverse_integer.md](file:///mnt/d/sahaj/dsa/2026-09-21-reverse_integer.md) | 32-bit signed overflow bounds check |
 | **Fibonacci Number** | [2026-09-21-fibonacci_number.md](file:///mnt/d/sahaj/dsa/2026-09-21-fibonacci_number.md) | Iterative space-optimized DP ($O(1)$ space) |
+| **Pow(x, n)** | [2026-10-10-powx_n.md](file:///mnt/d/sahaj/dsa/2026-10-10-powx_n.md) | Binary exponentiation ($O(\log n)$) |
+| **Count Good Numbers** | [2026-10-10-count-good-numbers.md](file:///mnt/d/sahaj/dsa/2026-10-10-count-good-numbers.md) | Modular binary exponentiation ($O(\log n)$) |
 
 ---
 

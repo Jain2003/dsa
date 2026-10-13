@@ -783,7 +783,37 @@ To avoid needing to "look ahead" or test all future options:
 3. If the answer is **NO**, the bottleneck pointer has **zero remaining potential**.
 4. **Eliminate the bottleneck pointer** immediately (`left++` or `right--`).
 
-```
+---
+
+## 32. Recursion & Backtracking Performance Pitfalls
+
+### A. Pass-by-Value on Vectors / Strings (`TLE` Cause #1)
+- **Symptom:** Code logic is $O(2^N)$, but gets TLE on $N = 20$.
+- **Cause:** Writing `void helper(vector<int> nums, ...)` or `void helper(string s, ...)` copies the entire collection in **every single call frame**.
+- **Fix:** Always pass by reference: `const vector<int> &nums` or `string &s`.
+
+### B. Boolean Short-Circuiting in Existence Checks
+- When a problem asks **"Does there exist any valid subset/path?"**:
+  - Do **NOT** store all valid answers into a `vector<vector<int>> ans` and check `ans.size() > 0`.
+  - Instead, declare `bool helper(...)`.
+  - As soon as one branch returns `true`, immediately return `true` to cancel further recursion down other branches:
+    ```cpp
+    if (helper(nums, i + 1, sum + nums[i])) return true;
+    if (helper(nums, i + 1, sum)) return true;
+    return false;
+    ```
+
+### C. Parameterized vs. Functional Recursion (Counting Patterns)
+- **Parameterized Style (`void helper(..., int &counter)`):**
+  - Carries a counter reference down the recursion stack and increments at base cases.
+  - Good for simple backtracking, but harder to memoize.
+- **Functional Style (`int helper(...)`):**
+  - Subproblems return their own counts directly:
+    ```cpp
+    return helper(i + 1, sum + nums[i]) + helper(i + 1, sum);
+    ```
+  - **Superpower:** Seamlessly transitions into Dynamic Programming (`dp[i][sum] = pick + notPick`).
+
 
 
 
