@@ -86,6 +86,8 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Count Subsequences with Sum K** | [2026-10-13-count-subsequences-with-target-sum.md](file:///mnt/d/sahaj/dsa/2026-10-13-count-subsequences-with-target-sum.md) | Parameterized vs. Functional recursion & DP counting |
 | **Generate Binary Strings Without Consecutive 1s** | [2026-10-13-generate-binary-strings-without-consecutive-1s.md](file:///mnt/d/sahaj/dsa/2026-10-13-generate-binary-strings-without-consecutive-1s.md) | Constrained backtracking (`current.back() == '0'`) |
 | **Combination Sum** | [2026-10-14-combination-sum.md](file:///mnt/d/sahaj/dsa/2026-10-14-combination-sum.md) | Unbounded pick/stay & don't pick/move backtracking |
+| **Combination Sum II** | [2026-10-14-combination-sum-ii.md](file:///mnt/d/sahaj/dsa/2026-10-14-combination-sum-ii.md) | Sort + loop-based backtracking with duplicate skipping |
+| **Subsets II** | [2026-10-14-subsets-ii.md](file:///mnt/d/sahaj/dsa/2026-10-14-subsets-ii.md) | Power set with duplicates via sort + loop skipping |
 
 ### 🔄 Sorting Algorithms
 | Problem / Topic | File | Key Pattern / Concept |

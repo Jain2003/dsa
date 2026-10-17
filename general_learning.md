@@ -814,6 +814,28 @@ To avoid needing to "look ahead" or test all future options:
     ```
   - **Superpower:** Seamlessly transitions into Dynamic Programming (`dp[i][sum] = pick + notPick`).
 
+---
+
+## 33. Backtracking Paradigms: Binary Choice vs. Loop-Based Selection
+
+### Pattern 1: Binary Decision (Pick vs. Don't Pick)
+- Explicitly makes 2 calls:
+  - `helper(i + 1, sum + nums[i])` (Include)
+  - `helper(i + 1, sum)` (Exclude)
+- Best for: Pure subset generation without duplicate elements, DP transitions.
+
+### Pattern 2: Loop-Based Selection (Level-by-Level Candidate Placement)
+- Loop iterates `for (int itr = i; itr < nums.size(); itr++)`.
+- **How "Don't Pick" (skipping) is handled:**
+  - Moving from iteration `itr` to `itr + 1` **IS** the "Don't Pick" of `nums[itr]`.
+  - When the loop finishes, returning up the call stack represents skipping ALL remaining elements.
+- **Handling Duplicates:**
+  - Sort first: `sort(nums.begin(), nums.end())`.
+  - Skip duplicate siblings at the same depth:
+    ```cpp
+    if (itr > i && nums[itr] == nums[itr - 1]) continue;
+    ```
+
 
 
 
