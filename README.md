@@ -88,6 +88,7 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Combination Sum** | [2026-10-14-combination-sum.md](file:///mnt/d/sahaj/dsa/2026-10-14-combination-sum.md) | Unbounded pick/stay & don't pick/move backtracking |
 | **Combination Sum II** | [2026-10-14-combination-sum-ii.md](file:///mnt/d/sahaj/dsa/2026-10-14-combination-sum-ii.md) | Sort + loop-based backtracking with duplicate skipping |
 | **Subsets II** | [2026-10-14-subsets-ii.md](file:///mnt/d/sahaj/dsa/2026-10-14-subsets-ii.md) | Power set with duplicates via sort + loop skipping |
+| **Combination Sum III** | [2026-10-17-combination-sum-iii.md](file:///mnt/d/sahaj/dsa/2026-10-17-combination-sum-iii.md) | Fixed-size $k$ sum combinations using digits $1..9$ |
 
 ### 🔄 Sorting Algorithms
 | Problem / Topic | File | Key Pattern / Concept |

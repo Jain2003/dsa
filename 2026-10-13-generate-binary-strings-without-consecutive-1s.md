@@ -47,31 +47,57 @@ At any position:
 
 ---
 
-## 3. Decision Tree ($n = 3$)
+---
+
+## 3. Decision Tree & Proof of No Duplicates ($n = 3$)
 
 ```
-                              "" (Length 0)
-                            /    \
-                 Add '0'   /      \  Add '1'
-                         "0"       "1"
-                        /   \        \
-               Add '0' /     \ '1'    \ '0' (Cannot add '1')
-                     "00"    "01"     "10"
-                    /   \      \      /   \
-                  "000" "001" "010" "100" "101"
+Level 0 (i = 0):                             ""
+                                    /                  \
+                        Add '0'    /                    \  Add '1' (empty() is true)
+                                  v                      v
+Level 1 (i = 1):                "0"                     "1"
+                              /     \                  /     \
+                     Add '0' /       \ Add '1'  Add '0'/       \ Add '1'
+                            /         \               /         \
+                           v           v             v           \
+Level 2 (i = 2):         "00"        "01"          "10"        BLOCKED ❌
+                        /    \      /    \        /    \       (back() == '1')
+               Add '0' / Add  \    / Add  \      / Add  \
+                      /   '1'  \  /   '0'  \    /   '0'  \
+                     v     v     v     \    v  v     v    v
+Level 3 (i = 3):  "000"  "001" "010"    \ "100" "101"
+                   ✅     ✅    ✅     BLOCKED ❌  ✅    ✅
+                                      (back()=='1')
 ```
 
-Total valid binary strings for length $n$: Follows Fibonacci numbers $F(n + 2)$.
+### Why It NEVER Generates Duplicates:
+1. **Mutually Exclusive Branches:** At character index `i`, the left branch appends `'0'` and the right branch appends `'1'`. Every string in the left subtree has a `'0'` at index `i`, while every string in the right subtree has a `'1'` at index `i`.
+2. **Unique Paths:** Every string corresponds to a distinct path of left/right choices from the root to a leaf node. No two paths can produce the same sequence of bits.
 
 ---
 
-## 4. Complexity Analysis
+## 4. Why TWO `pop_back()` Calls Are Required Here (vs. ONE in Subsets)
+
+- **In Subsets (Pick vs. Don't Pick):**
+  - Choice 1: Add element $\implies$ `push_back()` + `pop_back()`.
+  - Choice 2: Exclude element $\implies$ Does **not** push anything! Hence, only **one** `pop_back()` is needed.
+- **In Generate Binary Strings:**
+  - Choice 1: Add `'0'` $\implies$ `current.push_back('0')` paired with its own `current.pop_back()`.
+  - Choice 2: Add `'1'` $\implies$ `current.push_back('1')` paired with its own `current.pop_back()`.
+  - Both branches actually append a character, so **each branch must have its own push/pop pair**.
+  - **CRITICAL:** The second `pop_back()` must be placed **inside** the `if` block matching `push_back('1')`, otherwise it will pop an element even when `'1'` was never pushed!
+
+
+---
+
+## 5. Complexity Analysis
 - **Time Complexity:** $\mathcal{O}(2^n)$ in the worst case (more precisely $\mathcal{O}(F_{n+2}) \approx \mathcal{O}(1.618^n)$).
 - **Space Complexity:** $\mathcal{O}(n)$ auxiliary recursion stack space.
 
 ---
 
-## Code
+## 6. Code
 
 ```cpp
 #include <iostream>

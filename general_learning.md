@@ -832,9 +832,78 @@ To avoid needing to "look ahead" or test all future options:
 - **Handling Duplicates:**
   - Sort first: `sort(nums.begin(), nums.end())`.
   - Skip duplicate siblings at the same depth:
-    ```cpp
+    ```
     if (itr > i && nums[itr] == nums[itr - 1]) continue;
     ```
+
+---
+
+## 34. The Golden Rule of Backtracking Symmetry: Match Each `push_back()` with ONE `pop_back()`
+
+A function call must leave the shared state (`current`) in the **exact same condition** it received it.
+
+### In Binary Choice (Include / Exclude):
+```cpp
+// 1. Include nums[i]
+current.push_back(nums[i]);        // PUSH (+1)
+helper(nums, i + 1, current, ans);
+
+// 2. Exclude nums[i]
+current.pop_back();                // POP (-1) -> Undoes Choice 1!
+helper(nums, i + 1, current, ans); // Choice 2 pushes NOTHING!
+// No pop_back() needed here! Net balance is 0.
+```
+- **Choice 1 pushed `nums[i]`:** The vector grew by 1 element.
+- **`current.pop_back()` removed `nums[i]`:** The vector is restored to its original state.
+- **Choice 2 (Exclude) did NOT push anything:** The vector remains at its original state.
+- If you were to call `pop_back()` again at the very end, you would be removing an element that belonged to the **caller's (parent's)** frame! This causes state corruption and eventually a crash when `pop_back()` is called on an empty vector.
+
+---
+
+## 35. Deep Dive: The Duplicate Skipping Condition in Backtracking (`itr > i && nums[itr] == nums[itr - 1]`)
+
+Used in **Combination Sum II (LC 40)**, **Subsets II (LC 90)**, and **Permutations II (LC 47)**.
+
+```cpp
+for (int itr = i; itr < nums.size(); itr++) {
+    if (itr > i && nums[itr] == nums[itr - 1]) {
+        continue;
+    }
+    current.push_back(nums[itr]);
+    helper(..., itr + 1);
+    current.pop_back();
+}
+```
+
+### 1. Understanding `i` vs. `itr`
+- **`i` (Depth Parameter):** The starting boundary passed from the caller. Represents: *"You are allowed to pick numbers starting from index `i`."*
+- **`itr` (Loop Variable):** Iterates over remaining candidates for the **current slot**: `itr = i, i + 1, i + 2, ...`
+
+### 2. The Two Movement Directions: Vertical vs. Horizontal
+
+```
+                      LEVEL 0: Choosing 1st element
+                           /            \
+                          /              \
+            (itr = 0) Pick 1st '1'        (itr = 1) Pick 2nd '1'  <--- HORIZONTAL (Siblings)
+                        |                            |
+                     LEVEL 1                      LEVEL 1
+                 Choosing 2nd element         Choosing 2nd element
+                        |
+                  (itr = 1) Pick 2nd '1'
+                        |
+                  <--- VERTICAL (Depth)
+```
+
+| Direction | Condition | `itr > i`? | What Happens? | Purpose |
+| :--- | :--- | :---: | :--- | :--- |
+| **Vertical (Depth)** | First candidate at new level (`itr == i`) | **FALSE** | **NOT skipped!** Allowed to pick the duplicate. | Allows valid multi-element combinations like `[1, 1, 6]`. |
+| **Horizontal (Width)** | Subsequent sibling candidates at same level (`itr > i`) | **TRUE** | **SKIPPED by `continue`!** | Avoids exploring duplicate subtrees that start with the same value (e.g. redundant `[1, 7]` or `[1, 2, 5]`). |
+
+### 3. Golden Takeaway
+> **`itr == i` allows picking duplicate values across different positions (vertically down: `[1, 1]`), while `itr > i` prevents picking duplicate values for the same position (horizontally across: avoiding duplicate `[1, ...]`).**
+
+
 
 
 
