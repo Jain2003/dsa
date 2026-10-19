@@ -990,6 +990,136 @@ ListNode* ptr = &node;
 - Automatically destroyed when the function exits (goes out of scope).
 - **Warning:** Never return the address of a stack-allocated node from a function!
 
+---
+
+## 40. The Assignment vs. Comparison Trap in C++ `if` Statements (`=` vs `==`)
+
+### The Trap:
+```cpp
+if (end = s.size()) { // ❌ BUG: Single '=' performs assignment!
+    ...
+}
+```
+
+### Why it causes silent failure:
+1. **Assignment expression value:** In C and C++, the expression `(a = b)` returns the assigned value `b`.
+2. **Implicit truthiness:** If `s.size()` is non-zero (e.g. `6`), `(end = 6)` evaluates to integer `6`.
+3. In C++, any non-zero integer is implicitly converted to boolean **`true`**!
+4. **Result:** The `if` condition **ALWAYS evaluates to `true`**, regardless of what `end` was previously!
+5. Any code placed *after* this `if` block becomes completely unreachable dead code.
+
+### The Fix:
+Always use `==` for comparison:
+```cpp
+if (end == s.size()) { // ✅ Correct equality comparison
+```
+---
+
+## 41. Generating Substrings on the Basis of Length (Sliding Window / Fixed Length)
+
+### 1. Two Mental Models for Substring Generation
+- **Model A (By Start Index):** Fix `start`, expand `end` from `start` to `N - 1`. (Good for partitioning).
+- **Model B (By Length $L$):** Outer loop controls length $L = 1 \dots N$, inner loop slides a window of size $L$.
+
+### 2. Iterative Formula (Sliding Window of Length $L$)
+For a string of length $N$ and target length $L$:
+- The starting index $i$ ranges from $0$ up to $N - L$.
+- Substring is: `s.substr(i, L)`.
+```cpp
+for (int len = 1; len <= s.size(); len++) {
+    for (int i = 0; i <= s.size() - len; i++) {
+        string sub = s.substr(i, len);
+        // Process sub (length is exactly 'len')
+    }
+}
+```
+
+### 3. Recursive Formulation (By Length)
+- State: `(len, i)` where `len` is current substring length, and `i` is current start index.
+- When `i > s.size() - len`: window can no longer slide $\implies$ increment `len` to `len + 1` and reset `i = 0`.
+- Base Case: `len > s.size()`.
+
+---
+
+## 42. C++ `std::string::substr()` Complete Syntax & Behavior Guide
+
+### 1. Function Signature
+```cpp
+string substr(size_t pos = 0, size_t count = npos) const;
+```
+- **`pos` (1st parameter):** The **starting 0-based index** of the first character to include.
+- **`count` (2nd parameter):** The **number of characters (length)** to copy. *(NOT the ending index!)*
+- If `count` is omitted, it defaults to `string::npos`, which means: *"take everything from `pos` until the end of the string."*
+
+### 2. Common Patterns & Formulas
+
+| What you want | Syntax | Example on `s = "abcdef"` | Result |
+| :--- | :--- | :--- | :--- |
+| **Slice from `start` to `end` index** | `s.substr(start, end - start + 1)` | `s.substr(1, 3 - 1 + 1)` | `"bcd"` (indices 1 to 3) |
+| **Fixed length $L$ starting at `i`** | `s.substr(i, L)` | `s.substr(2, 3)` | `"cde"` (length 3 from index 2) |
+| **All characters from index `i` to end** | `s.substr(i)` | `s.substr(2)` | `"cdef"` |
+| **First $K$ characters (prefix)** | `s.substr(0, K)` | `s.substr(0, 3)` | `"abc"` |
+| **Last $K$ characters (suffix)** | `s.substr(s.size() - K)` | `s.substr(6 - 2)` | `"ef"` |
+
+### 3. Edge Cases & Safety Rules
+- **If `pos > s.size()`:** Throws a `std::out_of_range` exception (crash)!
+- **If `pos == s.size()`:** Returns an empty string `""` safely (no exception).
+- **If `pos + count > s.size()`:** C++ does **NOT** throw an error; it simply stops at the end of the string and returns all characters available.
+- **Time Complexity:** $\mathcal{O}(\text{count})$ — It allocates a new `std::string` and copies characters into it.
+
+---
+
+## 43. Backtracking Pitfall: Pass-by-Value vs Pass-by-Reference with `pop_back()`
+
+When implementing backtracking algorithms (like grid search, subset generation, permutations), a classic mismatch happens when mixing **pass-by-value expression passing** with **backtracking cleanup (`pop_back()`)**.
+
+### 1. The Trap: Premature `pop_back()` on Pass-by-Value
+Look at this code:
+```cpp
+void helper(vector<vector<char>>& board, string current, int i, int j) {
+    char letter = board[i][j];
+    // current + letter creates a NEW temporary string passed to helper.
+    // The local 'current' in this function was NEVER modified!
+    helper(board, current + letter, i + 1, j);
+    
+    current.pop_back(); // BUG! Pops a character from the EXISTING prefix!
+    helper(board, current + letter, i, j + 1); // Corrupted prefix!
+    current.pop_back(); // BUG!
+}
+```
+**Why this breaks:**
+1. `current + letter` does not alter `current` in the local scope.
+2. Calling `current.pop_back()` deletes the *previous* character that was already there when the function was called.
+3. Multiple `pop_back()` calls will eventually call `pop_back()` on an empty string, triggering **Undefined Behavior / crash**!
+
+### 2. The Two Correct Ways to Handle State in Backtracking
+
+| Approach | Passing Mechanism | How to Advance | How to Backtrack | Memory / Speed |
+| :--- | :--- | :--- | :--- | :--- |
+| **A. Pure Functional (Pass-by-Value)** | `string current` | `helper(..., current + letter)` | **Nothing!** Do not call `pop_back()`. | High copies $\mathcal{O}(L^2)$ |
+| **B. Shared State (Pass-by-Reference)** | `string& current` | `current.push_back(letter); helper(...);` | `current.pop_back();` | Fast & memory efficient $\mathcal{O}(L)$ |
+| **C. Index Pointer (Optimal for Search)** | `int idx` | `helper(..., idx + 1)` | **Nothing!** Just pass `idx + 1`. | $\mathcal{O}(1)$ overhead! |
+
+### 3. In-Place Visited Masking in Grid DFS
+To prevent revisiting the same cell without creating an extra `vector<vector<bool>> visited`:
+```cpp
+char temp = board[r][c];
+board[r][c] = '#'; // Mark as visited
+
+// Explore 4 directions...
+bool found = dfs(board, word, r + 1, c, idx + 1) ||
+             dfs(board, word, r - 1, c, idx + 1) ||
+             dfs(board, word, r, c + 1, idx + 1) ||
+             dfs(board, word, r, c - 1, idx + 1);
+
+board[r][c] = temp; // Backtrack / unmark
+return found;
+```
+
+
+
+
+
 
 
 

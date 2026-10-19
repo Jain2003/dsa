@@ -91,6 +91,8 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Combination Sum III** | [2026-10-17-combination-sum-iii.md](file:///mnt/d/sahaj/dsa/2026-10-17-combination-sum-iii.md) | Fixed-size $k$ sum combinations using digits $1..9$ |
 | **Letter Combinations of a Phone Number** | [2026-10-18-letter-combinations-of-a-phone-number.md](file:///mnt/d/sahaj/dsa/2026-10-18-letter-combinations-of-a-phone-number.md) | Phone keypad cartesian product backtracking |
 | **Palindrome Partitioning** | [2026-10-18-palindrome-partitioning.md](file:///mnt/d/sahaj/dsa/2026-10-18-palindrome-partitioning.md) | Substring partitioning via backtracking & palindrome pruning |
+| **Generate All Substrings (Recursion)** | [2026-10-19-generate-all-substrings-using-recursion.md](file:///mnt/d/sahaj/dsa/2026-10-19-generate-all-substrings-using-recursion.md) | Dual-index recursion simulating nested loops |
+| **Word Search** | [2026-10-19-word-search.md](file:///mnt/d/sahaj/dsa/2026-10-19-word-search.md) | 2D grid DFS backtracking with in-place visited masking |
 
 ### 🔄 Sorting Algorithms
 | Problem / Topic | File | Key Pattern / Concept |
