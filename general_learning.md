@@ -903,6 +903,96 @@ for (int itr = i; itr < nums.size(); itr++) {
 ### 3. Golden Takeaway
 > **`itr == i` allows picking duplicate values across different positions (vertically down: `[1, 1]`), while `itr > i` prevents picking duplicate values for the same position (horizontally across: avoiding duplicate `[1, ...]`).**
 
+---
+
+## 36. C++ `std::string::size()` vs. C-Style Strings (`\0` Null Terminator)
+
+### 1. `std::string` does NOT count `\0` in `.size()` or `.length()`
+- In C++, `string s = "abc";`
+  - `s.size()` $\implies \mathbf{3}$ (only actual characters `'a'`, `'b'`, `'c'`).
+  - Valid indices: `s[0] = 'a'`, `s[1] = 'b'`, `s[2] = 'c'`.
+- The null terminator `'\0'` exists in underlying memory to support `.c_str()`, but is **strictly excluded** from `.size()`.
+
+### 2. When does `4` happen? (C-style char arrays)
+- In C, a raw string literal or char array:
+  - `char arr[] = "abc";`
+  - `sizeof(arr)` $\implies \mathbf{4}$ bytes (includes the trailing `'\0'`).
+  - `strlen(arr)` $\implies \mathbf{3}$ (standard C function also excludes `'\0'`).
+
+### 3. Iteration Rule of Thumb
+- Always iterate up to `itr < s.size()`, **never** `itr < s.size() - 1`.
+- `itr < s.size() - 1` stops one character early and completely misses the final character!
+
+---
+
+## 37. Terminology Clarification: Substring vs. Subsequence vs. Substring Partition
+
+### 1. Definitions
+- **Substring:** A contiguous slice of characters from index `i` to `j`. Total non-empty substrings = $\frac{N(N+1)}{2}$. For `"aab"`: `"a"`, `"aa"`, `"aab"`, `"a"`, `"ab"`, `"b"`.
+- **Subsequence:** Any sequence derived by deleting 0 or more characters without changing relative order (can be non-contiguous). Total subsequences = $2^N$.
+- **Substring Partition (Palindrome Partitioning / Word Break):** Slicing the **entire string** into contiguous contiguous chunks such that their concatenation equals the original string:
+  - For `"aab"`: `["a", "a", "b"]`, `["a", "ab"]`, `["aa", "b"]`, `["aab"]`.
+  - Done via backtracking with a loop from `start` to `end`.
+
+---
+
+## 38. Deleting a Node in Singly Linked List Without `prev` Pointer ($\mathcal{O}(1)$ Trick)
+
+### The Problem:
+- Standard singly linked list deletion requires updating `prev->next = node->next`.
+- If only given `ListNode* node` (without access to `head` or `prev`), we cannot traverse backwards.
+
+### The "Identity Theft" Pattern:
+1. **Copy value:** Copy successor's value into current node:
+   ```cpp
+   node->val = node->next->val;
+   ```
+2. **Bypass successor:** Point current node past the duplicate successor:
+   ```cpp
+   ListNode* temp = node->next;
+   node->next = node->next->next;
+   delete temp; // C++ good practice: free memory
+   ```
+
+### Constraint / Edge Case:
+- **Cannot be applied to the tail node!** If `node` is the last node (`node->next == nullptr`), there is no successor to copy values from.
+
+---
+
+## 39. Creating a New Node in Linked List (C++)
+
+### 1. Typical Node Definition
+```cpp
+struct ListNode {
+    int val;
+    ListNode* next;
+
+    // Constructors
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode* next) : val(x), next(next) {}
+};
+```
+
+### 2. Method 1: Dynamic Allocation on the Heap (Standard & Required for LeetCode)
+```cpp
+ListNode* newNode = new ListNode(42);
+```
+- **Why Heap?** Persists across function calls until explicitly destroyed with `delete`.
+- Pointer syntax: uses `->` to access fields (e.g. `newNode->val`, `newNode->next`).
+- Freeing memory: `delete newNode;`
+
+### 3. Method 2: Stack Allocation (Local Only)
+```cpp
+ListNode node(42);
+ListNode* ptr = &node;
+```
+- Automatically destroyed when the function exits (goes out of scope).
+- **Warning:** Never return the address of a stack-allocated node from a function!
+
+
+
+
 
 
 

@@ -89,6 +89,8 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Combination Sum II** | [2026-10-14-combination-sum-ii.md](file:///mnt/d/sahaj/dsa/2026-10-14-combination-sum-ii.md) | Sort + loop-based backtracking with duplicate skipping |
 | **Subsets II** | [2026-10-14-subsets-ii.md](file:///mnt/d/sahaj/dsa/2026-10-14-subsets-ii.md) | Power set with duplicates via sort + loop skipping |
 | **Combination Sum III** | [2026-10-17-combination-sum-iii.md](file:///mnt/d/sahaj/dsa/2026-10-17-combination-sum-iii.md) | Fixed-size $k$ sum combinations using digits $1..9$ |
+| **Letter Combinations of a Phone Number** | [2026-10-18-letter-combinations-of-a-phone-number.md](file:///mnt/d/sahaj/dsa/2026-10-18-letter-combinations-of-a-phone-number.md) | Phone keypad cartesian product backtracking |
+| **Palindrome Partitioning** | [2026-10-18-palindrome-partitioning.md](file:///mnt/d/sahaj/dsa/2026-10-18-palindrome-partitioning.md) | Substring partitioning via backtracking & palindrome pruning |
 
 ### 🔄 Sorting Algorithms
 | Problem / Topic | File | Key Pattern / Concept |
@@ -102,6 +104,13 @@ This repository documents my daily problem-solving journey, covering fundamental
 | Problem / Topic | File | Key Pattern / Concept |
 | :--- | :--- | :--- |
 | **Find the Duplicate Number** | [2026-09-21-find_duplicate_number.md](file:///mnt/d/sahaj/dsa/2026-09-21-find_duplicate_number.md) | Floyd's Tortoise and Hare cycle detection |
+
+### 🔗 Linked List
+| Problem / Topic | File | Key Pattern / Concept |
+| :--- | :--- | :--- |
+| **Delete Node in a Linked List** | [2026-10-18-delete-node-in-a-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-18-delete-node-in-a-linked-list.md) | O(1) value overwrite & next-node bypass trick |
+| **Delete Tail of Linked List** | [2026-10-18-delete-tail-of-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-18-delete-tail-of-linked-list.md) | O(N) second-to-last node traversal & memory deallocation |
+| **Insert at Head of Linked List** | [2026-10-18-insert-at-head-of-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-18-insert-at-head-of-linked-list.md) | O(1) single-line allocation & head-reference update |
 
 ### 🔢 Math & Bit Manipulation
 | Problem / Topic | File | Key Pattern / Concept |
