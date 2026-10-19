@@ -111,6 +111,9 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Delete Node in a Linked List** | [2026-10-18-delete-node-in-a-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-18-delete-node-in-a-linked-list.md) | O(1) value overwrite & next-node bypass trick |
 | **Delete Tail of Linked List** | [2026-10-18-delete-tail-of-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-18-delete-tail-of-linked-list.md) | O(N) second-to-last node traversal & memory deallocation |
 | **Insert at Head of Linked List** | [2026-10-18-insert-at-head-of-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-18-insert-at-head-of-linked-list.md) | O(1) single-line allocation & head-reference update |
+| **Construct Linked List from Array** | [2026-10-19-construct-linked-list-from-array.md](file:///mnt/d/sahaj/dsa/2026-10-19-construct-linked-list-from-array.md) | Head-tail moving pointer & dummy node construction patterns |
+| **Add Two Numbers** | [2026-10-19-add-two-numbers.md](file:///mnt/d/sahaj/dsa/2026-10-19-add-two-numbers.md) | Reverse-order digit addition with carry & dummy node |
+| **Odd Even Linked List** | [2026-10-19-odd-even-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-19-odd-even-linked-list.md) | In-place two-pointer alternating node stitching |
 
 ### 🔢 Math & Bit Manipulation
 | Problem / Topic | File | Key Pattern / Concept |
