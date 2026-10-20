@@ -1116,6 +1116,187 @@ board[r][c] = temp; // Backtrack / unmark
 return found;
 ```
 
+---
+
+## 44. Linked List Reversal: The 3-Pointer Dance & Recursive Induction
+
+### 1. The Iterative 3-Pointer Technique (Gold Standard: $O(N)$ Time, $O(1)$ Space)
+To reverse a singly linked list in-place without losing the remainder of the chain, you need 3 pointers:
+- `prev`: Tracks the head of the already reversed sublist (starts at `nullptr`).
+- `curr`: The active node being reversed (starts at `head`).
+- `next_node`: Temporary holder to prevent memory disconnection.
+
+```cpp
+ListNode* prev = nullptr;
+ListNode* curr = head;
+
+while (curr != nullptr) {
+    ListNode* next_node = curr->next; // 1. Save rest of list
+    curr->next = prev;               // 2. Reverse link to point backward
+    prev = curr;                     // 3. Move prev one step forward
+    curr = next_node;                // 4. Move curr one step forward
+}
+return prev; // prev is the new head!
+```
+
+### 2. The Recursive Approach ($O(N)$ Time, $O(N)$ Stack Space)
+Key insight for recursive reversal:
+```cpp
+ListNode* reverseList(ListNode* head) {
+    if (!head || !head->next) return head; // Base case
+
+    ListNode* newHead = reverseList(head->next); // Reverse sublist
+    
+    head->next->next = head; // Make original next node point back to head
+    head->next = nullptr;    // Break original forward link
+    
+    return newHead;
+}
+```
+**Why `head->next->next = head` works:**
+In `1 -> 2 <- 3 <- 4`, `head` is `1`, and `head->next` is `2` (the tail of the reversed sublist). Setting `head->next->next = head` makes `2->next = 1`.
+
+---
+
+## 45. Linked List: The Fixed-Gap Two-Pointer & Dummy Node Pattern
+
+### 1. The Fixed-Gap Technique (Finding the $K^{\text{th}}$ Node from the End in 1 Pass)
+To find or delete the $n^{\text{th}}$ node from the end without calculating the total length in a prior pass:
+1. Initialize two pointers: `fast` and `slow`.
+2. Move `fast` ahead by $n$ steps (or $n + 1$ steps from a dummy node).
+3. Move both `fast` and `slow` together until `fast` reaches `nullptr`.
+4. The distance between `fast` (at end) and `slow` remains fixed, so `slow` lands precisely at the desired location!
+
+### 2. The Dummy Node Safeguard for Deletion
+When deleting nodes from a linked list, the target node might be the `head` itself.
+- Without a dummy node: You must write special-case branches (`if (x == 0) return head->next;`).
+- With a stack-allocated dummy node:
+  ```cpp
+  ListNode dummy(0);
+  dummy.next = head;
+  ListNode* slow = &dummy;
+  ```
+  `dummy.next` always preserves the updated head, even if the original first node is deleted!
+
+---
+
+## 46. C++ Member Access: Dot (`.`) vs. Arrow (`->`) Operator
+
+In C++, whether you write `dummy.next` or `dummy->next` depends entirely on **how `dummy` was declared**:
+
+### 1. The Fundamental Difference
+
+| Syntax | What is `dummy`? | Where is it allocated? | Meaning | Cleanup |
+| :--- | :--- | :--- | :--- | :--- |
+| **`dummy.next`** | An **Object / Instance** (`ListNode dummy(0);`) | **Stack** | Direct member access on the object | Automatic when function returns (RAII) |
+| **`dummy->next`** | A **Pointer to an Object** (`ListNode* dummy;`) | **Heap** (if `new ListNode`) or pointing to another node | Shorthand for `(*dummy).next` (dereference + access) | Manual `delete dummy;` required if allocated with `new` |
+
+### 2. Code Comparison in Linked List Problems
+
+#### Pattern A: Stack-Allocated Dummy (`dummy.next`) — Preferred & Modern C++
+```cpp
+ListNode dummy(0);      // dummy is an OBJECT on the stack
+dummy.next = head;      // Use '.' because dummy is NOT a pointer
+ListNode* slow = &dummy;// Take its address using '&' to pass to pointer variables
+...
+return dummy.next;      // Return pointer to head; 'dummy' is cleanly popped off stack!
+```
+- **Pros:** Zero heap allocation overhead, impossible to leak memory, fast.
+
+#### Pattern B: Heap-Allocated Dummy (`dummy->next`) — Traditional / Pointer style
+```cpp
+ListNode* dummy = new ListNode(0); // dummy is a POINTER to heap memory
+dummy->next = head;                // Use '->' because dummy IS a pointer
+...
+ListNode* res = dummy->next;
+delete dummy;                      // Crucial! Must free dummy to avoid memory leak
+return res;
+```
+- **Cons:** Slower (`new` incurs dynamic allocator overhead), requires explicit `delete`.
+
+### 3. Compiler Errors if Swapped
+- Calling `dummy->next` on `ListNode dummy;`:
+  `error: base operand of '->' has non-pointer type 'ListNode'`
+- Calling `dummy.next` on `ListNode* dummy;`:
+  `error: request for member 'next' in 'dummy', which is of pointer type 'ListNode*'`
+
+---
+
+## 47. Linked List: Value Overwriting vs. Pointer Rewiring
+
+When solving linked list sorting or rearrangement problems (like sorting 0s, 1s, and 2s or reordering nodes):
+
+### 1. The Value Overwriting Shortcut (Counting Approach)
+Counting values and then overwriting `node->data` in a second pass:
+- **Complexity:** $\mathcal{O}(N)$ time, $\mathcal{O}(1)$ space.
+- **Why it is frowned upon / disallowed in interviews:**
+  1. **Corrupts Object Identity:** In real systems, nodes represent entities (e.g. database rows, user sessions). External systems holding pointers to `node_A` now see the data of `node_B`.
+  2. **Heavy Node Payloads:** If the node stores a large struct or heavy object rather than a primitive `int`, copying data is prohibitively slow ($\mathcal{O}(\text{payload\_size})$).
+  3. **Does not test pointer manipulation:** Linked list interviews test your mastery of pointers (`next`), not basic array counting.
+
+### 2. The 3-Dummy Partition & Stitch Pattern (Optimal Link Manipulation)
+Instead of overwriting values, partition nodes into 3 sublists in a single pass:
+```cpp
+ListNode zeroD(0), oneD(0), twoD(0);
+ListNode *z = &zeroD, *o = &oneD, *t = &twoD;
+
+while (curr) {
+    if (curr->data == 0)      { z->next = curr; z = z->next; }
+    else if (curr->data == 1) { o->next = curr; o = o->next; }
+    else                      { t->next = curr; t = t->next; }
+    curr = curr->next;
+}
+
+// Stitching: handle edge cases where 1s or 0s might be absent!
+z->next = (oneD.next) ? oneD.next : twoD.next;
+o->next = twoD.next;
+t->next = nullptr; // Crucial to prevent cycles!
+
+return (zeroD.next) ? zeroD.next : ((oneD.next) ? oneD.next : twoD.next);
+```
+
+---
+
+## 48. Linked List: Right-to-Left Operations without Reversal (Recursive Unwinding)
+
+When an operation on a singly linked list requires working from the **least significant digit (tail)** to the **most significant digit (head)** — such as adding 1 or adding two numbers stored in normal order:
+
+### 1. The Conventional Iterative Way: Double Reversal
+- Reverse the list $\rightarrow$ Perform addition $\rightarrow$ Reverse back.
+- **Pros:** $\mathcal{O}(1)$ auxiliary space.
+- **Cons:** High code verbosity, 3 passes over the list.
+
+### 2. The Recursive Carry Pattern (0 Reversals!)
+Leverage the recursive call stack to reach the tail first. Carry is propagated **backwards** as the recursion unwinds:
+
+```cpp
+int addCarry(ListNode* node) {
+    if (!node) return 1; // Base case: tail returns the initial +1 carry
+
+    int carry = addCarry(node->next);
+    int sum = node->val + carry;
+    node->val = sum % 10; // Update current digit in-place
+    return sum / 10;      // Propagate new carry back to caller
+}
+
+ListNode* addOne(ListNode* head) {
+    int carry = addCarry(head);
+    if (carry > 0) {
+        ListNode* newHead = new ListNode(carry);
+        newHead->next = head;
+        return newHead;
+    }
+    return head;
+}
+```
+- **Time Complexity:** $\mathcal{O}(N)$ (single pass).
+- **Auxiliary Space:** $\mathcal{O}(N)$ recursion stack.
+
+
+
+
+
+
 
 
 

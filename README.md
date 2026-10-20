@@ -116,6 +116,11 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Construct Linked List from Array** | [2026-10-19-construct-linked-list-from-array.md](file:///mnt/d/sahaj/dsa/2026-10-19-construct-linked-list-from-array.md) | Head-tail moving pointer & dummy node construction patterns |
 | **Add Two Numbers** | [2026-10-19-add-two-numbers.md](file:///mnt/d/sahaj/dsa/2026-10-19-add-two-numbers.md) | Reverse-order digit addition with carry & dummy node |
 | **Odd Even Linked List** | [2026-10-19-odd-even-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-19-odd-even-linked-list.md) | In-place two-pointer alternating node stitching |
+| **Reverse Linked List** | [2026-10-20-reverse-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-20-reverse-linked-list.md) | Iterative 3-pointer in-place reversal ($O(1)$ space) vs recursive |
+| **Remove Nth Node From End of List** | [2026-10-20-remove-nth-node-from-end-of-list.md](file:///mnt/d/sahaj/dsa/2026-10-20-remove-nth-node-from-end-of-list.md) | 1-pass fast & slow two-pointer gap technique with dummy node |
+| **Sort a Linked List of 0s, 1s, and 2s** | [2026-10-20-sort-linked-list-of-0s-1s-2s.md](file:///mnt/d/sahaj/dsa/2026-10-20-sort-linked-list-of-0s-1s-2s.md) | 1-pass 3-dummy pointer partitioning & stitching vs value overwrite |
+| **Add 1 to a Number Represented as Linked List** | [2026-10-20-add-one-to-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-20-add-one-to-linked-list.md) | Recursive carry propagation ($O(1)$ reversals) vs in-place reverse |
+
 
 ### 🔢 Math & Bit Manipulation
 | Problem / Topic | File | Key Pattern / Concept |
