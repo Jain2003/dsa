@@ -1292,6 +1292,137 @@ ListNode* addOne(ListNode* head) {
 - **Time Complexity:** $\mathcal{O}(N)$ (single pass).
 - **Auxiliary Space:** $\mathcal{O}(N)$ recursion stack.
 
+---
+
+## 49. The Tortoise and Hare (Slow & Fast Pointer) Pattern
+
+The Tortoise and Hare technique is the **gold standard** for finding the middle of a linked list, detecting cycles, or finding entry points without knowing the list length upfront.
+
+### 1. Finding the Middle in 1 Pass
+- `slow` advances **1 step** per iteration.
+- `fast` advances **2 steps** per iteration.
+- When `fast` reaches the end, `slow` is guaranteed to be at $\lfloor N / 2 \rfloor$ (the exact middle).
+
+```cpp
+ListNode* slow = head;
+ListNode* fast = head;
+
+while (fast != nullptr && fast->next != nullptr) {
+    slow = slow->next;
+    fast = fast->next->next;
+}
+return slow;
+```
+
+### 2. Odd vs. Even Length Loop Termination
+
+| List Length | Example | Termination Cause | `slow` Position |
+| :--- | :--- | :--- | :--- |
+| **Odd** ($2k + 1$) | `[1, 2, 3, 4, 5]` | `fast->next == nullptr` (at tail `5`) | Exactly at middle (`3`) |
+| **Even** ($2k$) | `[1, 2, 3, 4, 5, 6]` | `fast == nullptr` (beyond tail) | Second middle (`4`) |
+
+**Why `fast != nullptr && fast->next != nullptr` order matters:**
+In C++, `&&` short-circuits. On even-length lists, `fast` becomes `nullptr`. If you check `fast->next != nullptr` first, it will attempt to dereference a null pointer, triggering a **Segmentation Fault**!
+
+---
+
+## 50. Linked List: The Offset Fast-Slow Pointer Pattern for Deleting Nodes
+
+When finding the middle node, `slow` lands directly **on** the middle node. But to **delete** a node, `slow` must land **one step before** the target node (`prev_node->next = target->next`).
+
+### 1. Eliminating Edge Cases via the Dummy-Start Offset
+Instead of starting both `slow` and `fast` at `head` and using a 3rd `prev` pointer or a hardcoded `if (n == 1)`:
+- Start `slow` at `dummy` (1 step behind).
+- Start `fast` at `head`.
+
+```cpp
+ListNode dummy(0);
+dummy.next = head;
+
+ListNode* slow = &dummy;
+ListNode* fast = head;
+
+while (fast != nullptr && fast->next != nullptr) {
+    slow = slow->next;
+    fast = fast->next->next;
+}
+
+// slow is guaranteed to stop at the node BEFORE the middle!
+ListNode* toDelete = slow->next;
+slow->next = slow->next->next;
+delete toDelete;
+
+return dummy.next;
+```
+
+### Why this naturally handles $N = 1$ (Zero `if` branches):
+- If `head = [1]`:
+  - `fast = [1]`, `fast->next == nullptr`.
+  - The `while` loop condition fails immediately and **does not run**.
+  - `slow` remains at `&dummy`.
+  - `slow->next = slow->next->next;` sets `dummy.next = nullptr`.
+  - Returns `dummy.next` which is `nullptr`!
+
+---
+
+## 51. Palindrome Linked List: Finding First-Half Middle & Restoring Structure
+
+### 1. Stopping at the First Half's Tail
+In "Middle of Linked List" (LeetCode 876), for even length lists, we wanted the **second middle** (`while (fast && fast->next)`).
+In "Palindrome Linked List", we want `slow` to stop at the **end of the first half** so that `slow->next` is the start of the second half!
+- **The Condition:**
+  ```cpp
+  while (fast->next != nullptr && fast->next->next != nullptr) {
+      slow = slow->next;
+      fast = fast->next->next;
+  }
+  ```
+  - For `[1, 2, 2, 1]` (even length): `slow` stops at `first 2` (index 1).
+  - For `[1, 2, 3, 2, 1]` (odd length): `slow` stops at middle `3` (index 2).
+  In both cases, `slow->next` is the exact start of the second half to reverse!
+
+### 2. The Golden Rule of Query Functions: Restore the List!
+A function named `isPalindrome(head)` is a **read / query function**, not a modifier.
+- Permanently reversing or cutting the caller's linked list introduces silent bugs in subsequent operations.
+- Always reverse the second half back before returning:
+  ```cpp
+  slow->next = reverseList(head2); // Restores original pointers!
+  ```
+
+---
+
+## 52. Linked List: The Two-Pointer Switching Pattern (Path Equalization)
+
+When finding an intersection point or comparing two linked lists of unequal lengths $L_1$ and $L_2$:
+
+### 1. The Mathematical Invariance
+Let $a$ be the unique prefix of List A, $b$ be the unique prefix of List B, and $c$ be the shared common suffix:
+- Path of pointer A: $\text{List A} \to \text{List B} = a + c + b$
+- Path of pointer B: $\text{List B} \to \text{List A} = b + c + a$
+
+Because $(a + c) + b = (b + c) + a$, after at most 1 redirection, both pointers become **synchronized** and arrive at the intersection node at the exact same step!
+
+### 2. The 5-Line Implementation
+```cpp
+ListNode* pA = headA;
+ListNode* pB = headB;
+
+while (pA != pB) {
+    pA = (pA == nullptr) ? headB : pA->next;
+    pB = (pB == nullptr) ? headA : pB->next;
+}
+return pA; // Either points to the intersection node, or both are nullptr!
+```
+
+### 3. Why It Automatically Handles No Intersection ($c = 0$)
+- If the lists never intersect, pointer A travels $a + b$ steps and pointer B travels $b + a$ steps.
+- At step $a + b$, both pointers reach `nullptr` at the **exact same time** (`pA == pB == nullptr`).
+- The loop terminates naturally and returns `nullptr` with zero extra boolean flags or length checks!
+
+
+
+
+
 
 
 

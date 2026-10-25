@@ -120,6 +120,14 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Remove Nth Node From End of List** | [2026-10-20-remove-nth-node-from-end-of-list.md](file:///mnt/d/sahaj/dsa/2026-10-20-remove-nth-node-from-end-of-list.md) | 1-pass fast & slow two-pointer gap technique with dummy node |
 | **Sort a Linked List of 0s, 1s, and 2s** | [2026-10-20-sort-linked-list-of-0s-1s-2s.md](file:///mnt/d/sahaj/dsa/2026-10-20-sort-linked-list-of-0s-1s-2s.md) | 1-pass 3-dummy pointer partitioning & stitching vs value overwrite |
 | **Add 1 to a Number Represented as Linked List** | [2026-10-20-add-one-to-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-20-add-one-to-linked-list.md) | Recursive carry propagation ($O(1)$ reversals) vs in-place reverse |
+| **Middle of the Linked List** | [2026-10-24-middle-of-the-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-24-middle-of-the-linked-list.md) | Tortoise and Hare (fast & slow pointer) 1-pass technique |
+| **Delete the Middle Node of a Linked List** | [2026-10-24-delete-the-middle-node-of-a-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-24-delete-the-middle-node-of-a-linked-list.md) | Dummy-offset fast & slow pointer (zero hardcoded edge cases) |
+| **Palindrome Linked List** | [2026-10-24-palindrome-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-24-palindrome-linked-list.md) | First-half middle finding, 2nd-half reversal, comparison & restoration |
+| **Intersection of Two Linked Lists** | [2026-10-25-intersection-of-two-linked-lists.md](file:///mnt/d/sahaj/dsa/2026-10-25-intersection-of-two-linked-lists.md) | Two-pointer switching length equalization ($O(1)$ space) |
+
+
+
+
 
 
 ### 🔢 Math & Bit Manipulation
