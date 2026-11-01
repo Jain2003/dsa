@@ -1563,6 +1563,38 @@ a = a - b;
 ```
 - **The Overflow Hazard:** If `a + b` exceeds `INT_MAX` or is less than `INT_MIN`, signed integer overflow occurs, which is **Undefined Behavior (UB)** in C and C++! XOR should always be preferred over arithmetic swap.
 
+---
+
+## 58. Greedy Choice Principle: Sorting + Two Pointers Matching
+
+When asked to maximize the number of satisfied parties (e.g. matching items with requests like "Assign Cookies"):
+
+### 1. The Core Greedy Strategy
+1. **Sort both arrays in ascending order:**
+   - Sort demands / greed factors: $g_0 \le g_1 \le g_2 \dots$
+   - Sort available resource capacities: $s_0 \le s_1 \le s_2 \dots$
+2. **Greedy Matching Rule:**
+   - Always attempt to satisfy the **smallest demand** with the **smallest sufficient resource**.
+   - If resource $s[j]$ cannot satisfy demand $g[i]$ (since $s[j] < g[i]$), then because demands are sorted ascending, $s[j]$ cannot satisfy *any* subsequent demand! Hence, it can be safely discarded ($j++$).
+   - If $s[j] \ge g[i]$, we allocate it: both move forward ($i++, j++$).
+
+```cpp
+sort(g.begin(), g.end());
+sort(s.begin(), s.end());
+
+int i = 0, j = 0;
+while (i < g.size() && j < s.size()) {
+    if (s[j] >= g[i]) {
+        i++; // Satisfied child i
+    }
+    j++; // Move to next cookie
+}
+return i; // Total satisfied
+```
+- **Time Complexity:** $\mathcal{O}(N \log N + M \log M)$ dominated by sorting.
+- **Space Complexity:** $\mathcal{O}(1)$.
+
+
 
 
 

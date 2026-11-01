@@ -148,9 +148,10 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Set the Rightmost Unset Bit** | [2026-10-31-set-the-rightmost-unset-bit.md](file:///mnt/d/sahaj/dsa/2026-10-31-set-the-rightmost-unset-bit.md) | Bitwise formula $n \mid (n + 1)$ ($O(1)$ time, 0 loops) |
 | **Swap Two Numbers** | [2026-10-31-swap-two-numbers.md](file:///mnt/d/sahaj/dsa/2026-10-31-swap-two-numbers.md) | In-place swap using bitwise XOR vs arithmetic (+, -) |
 
-
-
-
+### 💡 Greedy Algorithms
+| Problem / Topic | File | Key Pattern / Concept |
+| :--- | :--- | :--- |
+| **Assign Cookies** | [2026-11-01-assign-cookies.md](file:///mnt/d/sahaj/dsa/2026-11-01-assign-cookies.md) | Sort + Two Pointers greedy allocation ($O(N \log N + M \log M)$) |
 
 ---
 
