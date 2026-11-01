@@ -1419,6 +1419,155 @@ return pA; // Either points to the intersection node, or both are nullptr!
 - At step $a + b$, both pointers reach `nullptr` at the **exact same time** (`pA == pB == nullptr`).
 - The loop terminates naturally and returns `nullptr` with zero extra boolean flags or length checks!
 
+---
+
+## 53. Floyd's Cycle-Finding Algorithm: Phase 1 & Phase 2 Proof
+
+Floyd's algorithm (Tortoise and Hare) not only detects cycles in $\mathcal{O}(N)$ time and $\mathcal{O}(1)$ space, but also locates the **exact entry point of the cycle**.
+
+### 1. The Two Phases
+
+- **Phase 1 (Cycle Detection):**
+  `slow` moves 1 step, `fast` moves 2 steps.
+  If `fast` hits `nullptr`, there is no cycle.
+  If `slow == fast`, a cycle exists, and they are at a **meeting point** inside the cycle.
+
+- **Phase 2 (Cycle Entry Identification):**
+  Reset `slow = head`, leave `fast` at the **meeting point**.
+  Move both `slow` and `fast` **1 step at a time**.
+  The node where they collide is **guaranteed to be the cycle entry point**!
+
+### 2. The Mathematical Proof
+
+Let:
+- $L_1$ = distance from `head` to `cycle entry`.
+- $C$ = length of the cycle.
+- $d$ = distance from `cycle entry` to `meeting point`.
+- $(C - d)$ = remaining distance from `meeting point` back to `cycle entry`.
+
+When `slow` and `fast` meet in Phase 1:
+- Distance by `slow`: $S = L_1 + d$
+- Distance by `fast`: $F = L_1 + n \cdot C + d$ ($n \ge 1$ full laps)
+
+Since $F = 2 \cdot S$:
+$$L_1 + n \cdot C + d = 2(L_1 + d)$$
+$$L_1 + n \cdot C + d = 2L_1 + 2d$$
+$$n \cdot C = L_1 + d$$
+$$L_1 = n \cdot C - d = (n - 1) \cdot C + (C - d)$$
+
+**The Insight:**
+$L_1$ (distance from `head` to cycle entry) is **identically equal** to $(C - d)$ (distance from meeting point to cycle entry) plus some number of complete cycle loops $(n - 1) \cdot C$.
+Thus, advancing both at speed 1 synchronizes their arrival at the cycle entry!
+
+---
+
+## 54. Linked List: Counting the Length of a Loop/Cycle
+
+Once a cycle is detected using Floyd's Tortoise and Hare algorithm (`slow == fast`), finding the **length** of the cycle is straightforward and takes $\mathcal{O}(\text{cycle length})$ time:
+
+### The Technique
+1. Keep `slow` frozen at the **meeting point**.
+2. Start a moving pointer `curr = slow->next` and initialize `length = 1`.
+3. Advance `curr = curr->next` and increment `length` until `curr == slow`.
+4. When `curr` returns back to `slow`, `length` equals the total number of nodes in the cycle.
+
+```cpp
+if (slow == fast) {
+    int length = 1;
+    ListNode* curr = slow->next;
+    while (curr != slow) {
+        length++;
+        curr = curr->next;
+    }
+    return length;
+}
+```
+- **Time Complexity:** $\mathcal{O}(N)$ (detection) + $\mathcal{O}(C)$ (counting) = $\mathcal{O}(N)$.
+- **Space Complexity:** $\mathcal{O}(1)$.
+
+---
+
+## 55. Bit Manipulation: Core Formulas, Two's Complement & Precedence Pitfalls
+
+### 1. Essential Bitmasking Formulas
+For an integer $N$ and 0-based bit index $i$:
+- **Check if $i^{\text{th}}$ bit is set:** `(N & (1 << i)) != 0`
+- **Set $i^{\text{th}}$ bit:** `N = N | (1 << i)`
+- **Clear $i^{\text{th}}$ bit:** `N = N & ~(1 << i)`
+- **Toggle $i^{\text{th}}$ bit:** `N = N ^ (1 << i)`
+- **Check Odd / Even:** `(N & 1) != 0` (odd) vs `(N & 1) == 0` (even)
+- **Clear rightmost set bit:** `N = N & (N - 1)` (Kernighan's counting trick)
+- **Isolate rightmost set bit:** `lowest = N & (-N)`
+- **Check Power of 2:** `N > 0 && (N & (N - 1)) == 0`
+
+### 2. Two's Complement & NOT Operator (`~`)
+Under two's complement representation:
+$$\mathbf{-N = \sim N + 1} \implies \mathbf{\sim N = -(N + 1)}$$
+For example, `~5 = -6`, `~0 = -1`, `~(-1) = 0`.
+`~` flips **all 32 (or 64) bits** of the underlying integer, not just the visible binary digits!
+
+### 3. The Precedence Trap (C++ #1 Bug in Bitwise Logic)
+Comparison operators (`==`, `!=`, `<`, `>`) have **higher precedence** than bitwise operators (`&`, `^`, `|`):
+- `if (N & 1 == 0)` evaluates as `if (N & (1 == 0))` $\implies$ **Bug!**
+- **Golden Rule:** **Always wrap bitwise expressions in parentheses**:
+  ```cpp
+  if ((N & 1) == 0) // Correct check for even number
+  if ((N & (1 << i)) != 0) // Correct check for set bit
+  ```
+
+### 4. 64-bit Left Shift Overflow
+`1 << i` uses a 32-bit signed integer literal `1`. If $i \ge 31$, it overflows into undefined behavior!
+- For 64-bit values or $i \ge 31$: always use `1ULL << i` or `1LL << i`.
+
+---
+
+## 56. The Exact Behavior of `n | (n + 1)`
+
+A common question: *"Does `n | (n + 1)` always give the next odd number?"*
+
+### The Answer: NO!
+- **If $n$ is EVEN:** The rightmost unset bit is always Bit 0 ($2^0$). Setting bit 0 simply adds 1:
+  $$n \ | \ (n + 1) = n + 1 \quad (\text{the next odd number!})$$
+- **If $n$ is ODD:** Bit 0 is already `1`! The rightmost unset bit is at position $k \ge 1$:
+  - Setting that bit adds $2^k$ (which is always **EVEN**).
+  - An odd number plus an even number remains **ODD**.
+  - But it does **NOT** give $n + 2$ (the immediate next odd number). Instead, it can jump by $2, 4, 8, \dots$!
+
+### Concrete Examples:
+| $n$ | Binary $n$ | Binary $n + 1$ | $n \mid (n + 1)$ | Did it give the next odd number? |
+| :--- | :--- | :--- | :--- | :--- |
+| **6** (Even) | `110` | `111` | **7** | ✅ Yes ($6 + 1 = 7$) |
+| **9** (Odd) | `1001` | `1010` | **11** | ✅ Yes ($9 + 2 = 11$) |
+| **11** (Odd) | `1011` | `1100` | **15** | ❌ **No!** Jumped from 11 to 15 (next odd was 13)! |
+| **13** (Odd) | `1101` | `1110` | **15** | ✅ Yes ($13 + 2 = 15$) |
+| **19** (Odd) | `10011` | `10100` | **23** | ❌ **No!** Jumped from 19 to 23 (skipped 21)! |
+
+---
+
+## 57. In-Place Variable Swapping: XOR vs. Arithmetic Pitfalls
+
+### 1. Bitwise XOR Swap (Optimal & Overflow-Safe)
+```cpp
+a = a ^ b; // a stores XOR sum
+b = a ^ b; // (a ^ b) ^ b = a
+a = a ^ b; // (a ^ b) ^ a = b
+```
+- **Why it's safe:** XOR operates on individual bits independently without carries. It **never overflows**, even for `INT_MAX`, `INT_MIN`, or negative numbers.
+- **The Self-Swap Hazard:** If `&a == &b` (e.g. `swap(arr[i], arr[i])`), `a = a ^ a` sets the memory location to `0`! Always check `if (&a != &b)` when passing references/pointers.
+
+### 2. Arithmetic Swap (`+` and `-`)
+```cpp
+a = a + b;
+b = a - b;
+a = a - b;
+```
+- **The Overflow Hazard:** If `a + b` exceeds `INT_MAX` or is less than `INT_MIN`, signed integer overflow occurs, which is **Undefined Behavior (UB)** in C and C++! XOR should always be preferred over arithmetic swap.
+
+
+
+
+
+
 
 
 

@@ -124,6 +124,10 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Delete the Middle Node of a Linked List** | [2026-10-24-delete-the-middle-node-of-a-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-24-delete-the-middle-node-of-a-linked-list.md) | Dummy-offset fast & slow pointer (zero hardcoded edge cases) |
 | **Palindrome Linked List** | [2026-10-24-palindrome-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-24-palindrome-linked-list.md) | First-half middle finding, 2nd-half reversal, comparison & restoration |
 | **Intersection of Two Linked Lists** | [2026-10-25-intersection-of-two-linked-lists.md](file:///mnt/d/sahaj/dsa/2026-10-25-intersection-of-two-linked-lists.md) | Two-pointer switching length equalization ($O(1)$ space) |
+| **Linked List Cycle II (Find Cycle Entry)** | [2026-10-27-linked-list-cycle-ii.md](file:///mnt/d/sahaj/dsa/2026-10-27-linked-list-cycle-ii.md) | Floyd's cycle detection Phase 2 mathematical entry derivation ($O(1)$ space) |
+| **Find Length of Loop in Linked List** | [2026-10-27-find-length-of-loop-in-linked-list.md](file:///mnt/d/sahaj/dsa/2026-10-27-find-length-of-loop-in-linked-list.md) | Floyd's meeting point traversal & cycle length counting ($O(1)$ space) |
+
+
 
 
 
@@ -139,6 +143,14 @@ This repository documents my daily problem-solving journey, covering fundamental
 | **Fibonacci Number** | [2026-09-21-fibonacci_number.md](file:///mnt/d/sahaj/dsa/2026-09-21-fibonacci_number.md) | Iterative space-optimized DP ($O(1)$ space) |
 | **Pow(x, n)** | [2026-10-10-powx_n.md](file:///mnt/d/sahaj/dsa/2026-10-10-powx_n.md) | Binary exponentiation ($O(\log n)$) |
 | **Count Good Numbers** | [2026-10-10-count-good-numbers.md](file:///mnt/d/sahaj/dsa/2026-10-10-count-good-numbers.md) | Modular binary exponentiation ($O(\log n)$) |
+| **Bit Basics and Operators** | [2026-10-28-bit-basics-and-operators.md](file:///mnt/d/sahaj/dsa/2026-10-28-bit-basics-and-operators.md) | Fundamental bitwise operators, masks, two's complement, and Brian Kernighan algorithm |
+| **Number of 1 Bits (Hamming Weight)** | [2026-10-31-number-of-1-bits-hamming-weight.md](file:///mnt/d/sahaj/dsa/2026-10-31-number-of-1-bits-hamming-weight.md) | Brian Kernighan's $O(K)$ lowest set bit clearing vs builtin popcount |
+| **Set the Rightmost Unset Bit** | [2026-10-31-set-the-rightmost-unset-bit.md](file:///mnt/d/sahaj/dsa/2026-10-31-set-the-rightmost-unset-bit.md) | Bitwise formula $n \mid (n + 1)$ ($O(1)$ time, 0 loops) |
+| **Swap Two Numbers** | [2026-10-31-swap-two-numbers.md](file:///mnt/d/sahaj/dsa/2026-10-31-swap-two-numbers.md) | In-place swap using bitwise XOR vs arithmetic (+, -) |
+
+
+
+
 
 ---
 
